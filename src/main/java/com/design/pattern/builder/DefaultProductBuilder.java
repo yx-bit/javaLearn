@@ -30,11 +30,6 @@ public class DefaultProductBuilder implements ProductBuilder{
 
     @Override
     public ProductBuilder buildProductId(String productId) {
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         this.productId = productId;
         return this;
     }
@@ -76,7 +71,6 @@ class DefaultProductBuilderTest {
                 ProductBuilder builder = new DefaultProductBuilder();
                 builder.buildProductId(finalI +"");
                 builder.buildProductName("test"+finalI);
-
                 builder.buildId(finalI);
                 System.out.println(builder.toString());
             }).start();
