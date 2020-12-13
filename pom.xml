@@ -110,7 +110,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.3.4.RELEASE</version>
                 <configuration>
-                    <mainClass>com.design.pattern.DesignPatternApp</mainClass>
+                    <mainClass>com.java.learn.JavaLearnApp</mainClass>
                 </configuration>
                 <executions>
                     <execution>
