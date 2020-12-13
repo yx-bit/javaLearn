@@ -1,4 +1,4 @@
-package com.design.pattern.chains;
+package com.java.learn.design.pattern.chains;
 
 public class Chains {
     public static void main(String[] args) {
