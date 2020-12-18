@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.design.pattern</groupId>
-    <artifactId>designPattern</artifactId>
+    <groupId>com.java.learn</groupId>
+    <artifactId>javaLearn</artifactId>
     <version>1.0-REALEASE</version>
     <properties>
         <java.version>1.8</java.version>
@@ -14,12 +14,12 @@
         <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
     </properties>
     <dependencies>
-        <dependency>
+        <!--<dependency>
             <groupId>com.taobao.arthas</groupId>
             <artifactId>arthas-spring-boot-starter</artifactId>
             <version>3.4.3</version>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
