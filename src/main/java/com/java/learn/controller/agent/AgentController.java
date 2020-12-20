@@ -2,20 +2,43 @@ package com.java.learn.controller.agent;
 
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.PathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.MediaType;
+import org.springframework.http.codec.multipart.FilePart;
+import org.springframework.http.codec.multipart.FormFieldPart;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import sun.tools.java.ClassPath;
 
+import javax.management.remote.JMXConnector;
+import javax.management.remote.JMXConnectorFactory;
+import javax.management.remote.JMXServiceURL;
+import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/agent")
 public class AgentController {
-    private static Map<String, VirtualMachineDescriptor> jvmMap=null;
+    private static Map<String, VirtualMachineDescriptor> jvmMap = null;
 
+    @Autowired
+    ResourceLoader resourceLoader;
     @GetMapping("/getJvms")
     public Mono<Object> getJvms() {
         jvmMap = new ConcurrentHashMap<>();
@@ -35,20 +58,36 @@ public class AgentController {
         return Mono.just(map);
     }
 
-    @PostMapping("/attachPid")
-    public Mono<Object> attachPid(@PathVariable(name = "pId") String pId, MultipartFile multipartFile) {
-        if (jvmMap.containsKey(pId)) {
-            try {
-                VirtualMachine attach = VirtualMachine.attach(pId);
-                //输出到类路径，再从类路径获取
-                attach.loadAgent("");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    @PostMapping(value = "/attachPid", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Mono<Object> attachPid(ServerWebExchange serverWebExchange, @RequestPart("pId") FormFieldPart fieldPart, @RequestPart("multipartFile") FilePart multipartFile) {
+        String pId = fieldPart.value();
+        try {
+            //输出到类路径，再从类路径获取
+            Resource resource = resourceLoader.getResource("classpath:");
+            String path = resource.getURI().getPath();
+            System.out.println(path);
+            String filePath = path + File.separator + multipartFile.filename();
+            multipartFile.transferTo(new File(filePath));
+            // Attach到被监控的JVM进程上
+            VirtualMachine virtualmachine = VirtualMachine.attach(pId);
+            // 让JVM加载jmx Agent
+            virtualmachine.loadAgent(filePath, "com.sun.management.jmxremote");
+            // 获得连接地址
+            Properties properties = virtualmachine.getAgentProperties();
+            String address = (String) properties.get("com.sun.management.jmxremote.localConnectorAddress");
+            //detach
+            virtualmachine.detach();
+            // 通过jxm address来获取RuntimeMXBean对象，从而得到虚拟机运行时相关信息
+            JMXServiceURL url = new JMXServiceURL(address);
+            JMXConnector connector = JMXConnectorFactory.connect(url);
+            RuntimeMXBean rmxb = ManagementFactory.newPlatformMXBeanProxy(connector.getMBeanServerConnection(), "java.lang:type=Runtime",
+                    RuntimeMXBean.class);
+            // 得到目标虚拟机占用cpu时间
+            System.out.println(rmxb.getUptime());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        Map<String, String> jvmMap = new HashMap<>();
-
-        return Mono.just(jvmMap);
+        return Mono.just("Attach成功");
     }
 }

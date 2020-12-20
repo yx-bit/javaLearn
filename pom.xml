@@ -28,8 +28,9 @@
         <dependency>
             <groupId>com.sun</groupId>
             <artifactId>tools</artifactId>
+            <version>8</version>
             <scope>system</scope>
-            <systemPath>/data/home/yx-linux/java/jdk1.8.0_251/lib/tools.jar</systemPath>
+            <systemPath>${java.home}/../lib/tools.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
