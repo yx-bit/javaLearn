@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
 public class TimeInterceptor  {
     private static Logger logger = LoggerFactory.getLogger(JavaAgent.class);
     @RuntimeType
-    public static Object intercept(@This Object obj,
+    public static Object intercept(
                                    @Origin Method method,
                                    @SuperCall Callable<?> callable) throws Exception {
         long start = System.currentTimeMillis();
