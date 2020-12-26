@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.http.codec.multipart.FormFieldPart;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ServerWebExchange;
@@ -49,9 +50,12 @@ public class AgentController {
             String pid = entry.id();
             jvmMap.put(pid, entry);
             String displayName = entry.displayName();
-            int i = displayName.indexOf("/");
+            int i = displayName.indexOf(" ");
             if (i > 0) {
                 displayName = displayName.substring(0, i);
+            }
+            if(StringUtils.isEmpty(displayName)){
+                continue;
             }
             map.put(pid, displayName.trim());
         }
@@ -64,9 +68,13 @@ public class AgentController {
         try {
             //输出到类路径，再从类路径获取
             Resource resource = resourceLoader.getResource("classpath:");
+            resource.getURL();
             String path = resource.getURI().getPath();
+            if (path.startsWith("/")) {
+                path=path.substring(1, path.length());
+            }
             System.out.println(path);
-            String filePath = path + File.separator + multipartFile.filename();
+            String filePath = path + multipartFile.filename();
             multipartFile.transferTo(new File(filePath));
             // Attach到被监控的JVM进程上
             VirtualMachine virtualmachine = VirtualMachine.attach(pId);
