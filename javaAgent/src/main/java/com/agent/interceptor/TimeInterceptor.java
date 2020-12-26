@@ -22,7 +22,7 @@ public class TimeInterceptor  {
             // 原有函数执行
             return callable.call();
         } finally {
-            logger.info(method + ": took " + (System.currentTimeMillis() - start) + "ms");
+            logger.info(method.getName() + ": took " + (System.currentTimeMillis() - start) + "ms");
         }
     }
 }
