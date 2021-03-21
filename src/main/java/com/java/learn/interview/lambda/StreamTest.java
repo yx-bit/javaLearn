@@ -22,26 +22,35 @@ public class StreamTest {
         lists.add(new Person("Alisa", 7900,20, "female", "New York"));
 
     }
-    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException {
-        //遍历
-        System.out.println(foreach());
-        //遍历匹配
-        System.out.println(findFirst());
-        System.out.println(findAny());
-        System.out.println(anyMatch());
-        //筛选
-        System.out.println(filter());
-        //聚合
-        System.out.println(max());
-        System.out.println(min());
-        System.out.println(count());
-        //映射
-        System.out.println(map());
-        System.out.println(flatMap());
-        //归约
-        System.out.println(reduce());
-        //收集 collect
 
+    public static void main(String[] args) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, ClassNotFoundException {
+//        //遍历
+//        System.out.println(foreach());
+//        //遍历匹配
+//        System.out.println(findFirst());
+//        System.out.println(findAny());
+//        System.out.println(anyMatch());
+//        //筛选
+//        System.out.println(filter());
+//        //聚合
+//        System.out.println(max());
+//        System.out.println(min());
+//        System.out.println(count());
+//        //映射
+//        System.out.println(map());
+//        System.out.println(flatMap());
+//        //归约
+//        System.out.println(reduce());
+//        //收集 collect
+        List<Person> list2 = new ArrayList<>();
+        list2.add(new Person("Alisa", 7900,20, "female", "New York"));
+        list2.add(new Person("Alisa", 7900,20, "female", "New York"));
+        list2.add(new Person("Lily", 7800,18, "female", "Washington"));
+        lists.stream()
+                .filter(map -> list2.stream().anyMatch(map1 -> map.getName().equals(map1.getName())))
+                .forEach(map -> {
+                    System.out.println(map.getName());
+                });
 
     }
     //遍历
