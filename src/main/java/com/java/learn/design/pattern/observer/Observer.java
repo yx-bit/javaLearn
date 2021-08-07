@@ -15,7 +15,7 @@ public class Observer {
 
 class Subject {
     List<ObserverInterface> observerList = new ArrayList<>();
-
+    
     public void addObserver(ObserverInterface observer) {
         observerList.add(observer);
     }

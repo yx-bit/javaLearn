@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
 public class TimeInterceptor  {
-    private static Logger logger = LoggerFactory.getLogger(JavaAgent.class);
+    private static Logger logger = LoggerFactory.getLogger(TimeInterceptor.class);
     @RuntimeType
     public static Object intercept(
                                    @Origin Method method,
@@ -20,7 +20,8 @@ public class TimeInterceptor  {
         long start = System.currentTimeMillis();
         try {
             // 原有函数执行
-            return callable.call();
+            Object call = callable.call();
+            return call;
         } finally {
             logger.info(method.getName() + ": took " + (System.currentTimeMillis() - start) + "ms");
         }

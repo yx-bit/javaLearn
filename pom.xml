@@ -6,6 +6,7 @@
 
     <groupId>com.java.learn</groupId>
     <artifactId>javaLearn</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-REALEASE</version>
     <properties>
         <java.version>1.8</java.version>
@@ -93,6 +94,16 @@
             <groupId>org.openjdk.jol</groupId>
             <artifactId>jol-core</artifactId>
             <version>0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bit</groupId>
+            <artifactId>generator</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.8</version>
         </dependency>
     </dependencies>
 
