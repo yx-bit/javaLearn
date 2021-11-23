@@ -20,7 +20,7 @@ public class OddEvenPrint  {
             while (true) {
                 try {
                     odd.acquire();
-                    if (atomicInteger.get() > 100) {
+                    if (atomicInteger.get() > 10) {
                         return;
                     }
                     if (atomicInteger.get() % 2 != 0) {
@@ -37,7 +37,7 @@ public class OddEvenPrint  {
             while (true) {
                 try {
                     even.acquire();
-                    if (atomicInteger.get() > 100) {
+                    if (atomicInteger.get() > 10) {
                         return;
                     }
                     if (atomicInteger.get() % 2 == 0) {
