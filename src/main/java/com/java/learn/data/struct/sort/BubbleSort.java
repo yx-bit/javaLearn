@@ -3,8 +3,6 @@ package com.java.learn.data.struct.sort;
 import com.java.learn.util.Integers;
 import com.java.learn.util.Times;
 
-import java.util.Arrays;
-
 /**
  * 冒泡排序的几种方式
  * 冒泡排序的原理：
@@ -13,7 +11,7 @@ import java.util.Arrays;
  * 时间复杂度O（最坏的情况：n^2）
  * 稳定的算法
  */
-public class BubbleSort {
+public class BubbleSort<T extends Comparable> extends Sort {
 
     public static void main(String[] args) {
         Integer[] arr=Integers.tailAscOrder(1,10000,8000);
@@ -89,6 +87,20 @@ public class BubbleSort {
                     int tmp = integers[begin];
                     integers[begin] = integers[begin + 1];
                     integers[begin + 1] = tmp;
+                    sortedIndex = begin + 1;
+                }
+            }
+            end = sortedIndex;
+        }
+    }
+
+    @Override
+    protected void sort() {
+        for (int end = array.length - 1; end > 0; end--) {
+            int sortedIndex = 0;
+            for (int begin = 0; begin < end; begin++) {
+                if (cmp(begin,begin + 1)>0) {
+                    swap(begin,begin + 1);
                     sortedIndex = begin + 1;
                 }
             }

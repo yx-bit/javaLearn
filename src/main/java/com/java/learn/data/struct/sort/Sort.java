@@ -1,4 +1,7 @@
-package com.java.learn.util;
+package com.java.learn.data.struct.sort;
+
+import com.java.learn.util.Asserts;
+import com.java.learn.util.Integers;
 
 import java.text.DecimalFormat;
 
@@ -13,10 +16,10 @@ public abstract class Sort<T extends Comparable<T>> implements Comparable<Sort<T
         if (array == null || array.length < 2) return;
 
         this.array = array;
-
         long begin = System.currentTimeMillis();
         sort();
         time = System.currentTimeMillis() - begin;
+        Asserts.test(Integers.isAscOrder((Integer[]) this.array));
     }
 
     @Override
@@ -61,7 +64,7 @@ public abstract class Sort<T extends Comparable<T>> implements Comparable<Sort<T
         String swapCountStr = "交换：" + numberString(swapCount);
         String stableStr = null;//"稳定性：" + isStable();
         return "【" + getClass().getSimpleName() + "】\n"
-                + stableStr + " \t"
+                //+ stableStr + " \t"
                 + timeStr + " \t"
                 + compareCountStr + "\t "
                 + swapCountStr + "\n"
