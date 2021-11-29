@@ -8,7 +8,7 @@ public class TestSort {
     public static void main(String[] args) {
         //Integer[] arr= Integers.tailAscOrder(1,10000,8000);
         Integer[] arr=Integers.random(10000,1,200000);
-        testSort(arr,new QuickSort(),new MergeSort(),new BubbleSort<Integer>(),new SelectionSort<Integer>(),new HeapSort<Integer>(),new InsertionSort<Integer>());
+        testSort(arr,new ShellSort(),new QuickSort(),new MergeSort(),new BubbleSort<Integer>(),new SelectionSort<Integer>(),new HeapSort<Integer>(),new InsertionSort<Integer>());
     }
     public static <T extends Comparable>void testSort(T[] array, Sort... sorts){
         for (Sort sort : sorts) {
