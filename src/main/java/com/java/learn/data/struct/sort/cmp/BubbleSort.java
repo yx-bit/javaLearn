@@ -1,5 +1,6 @@
-package com.java.learn.data.struct.sort;
+package com.java.learn.data.struct.sort.cmp;
 
+import com.java.learn.data.struct.sort.Sort;
 import com.java.learn.util.Integers;
 import com.java.learn.util.Times;
 

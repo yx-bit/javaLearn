@@ -1,4 +1,6 @@
-package com.java.learn.data.struct.sort;
+package com.java.learn.data.struct.sort.cmp;
+
+import com.java.learn.data.struct.sort.Sort;
 
 /**
  * 堆排序（可以认为是对选择排序的一种优化）

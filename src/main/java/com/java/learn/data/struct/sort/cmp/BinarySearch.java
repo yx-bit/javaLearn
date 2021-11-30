@@ -1,4 +1,4 @@
-package com.java.learn.data.struct.sort;
+package com.java.learn.data.struct.sort.cmp;
 
 /**
  * 二分搜索
