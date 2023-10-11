@@ -14,22 +14,22 @@ public class GetArrCompleteMaxValue {
     }
 
     private static String largeNumber(int[] nums) {
-        Arrays.sort(nums);
-        Map<Integer, List<Integer>> map = new TreeMap<>();
-        for (int i = nums.length-1; i >=0 ; i--) {
-            int num = nums[i];
-            int length=(num + "").length();
-            List<Integer> integers = map.get(length);
-            if (CollectionUtils.isEmpty(integers)){
-                integers = new ArrayList<>();
-            }
-            integers.add(num);
-            map.put(length,integers);
+        String[] numStrings = new String[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            numStrings[i] = String.valueOf(nums[i]);
         }
-        List<Integer> result = new ArrayList<>();
-        map.entrySet().forEach(item->{
-            result.addAll(item.getValue());
+
+        Arrays.sort(numStrings, (a, b) -> {
+            String ab = a + b;
+            String ba = b + a;
+            return ba.compareTo(ab);
         });
-        return Strings.join(result,',').replaceAll(",","");
+
+        StringBuilder result = new StringBuilder();
+        for (String numString : numStrings) {
+            result.append(numString);
+        }
+
+        return result.toString();
     }
 }
