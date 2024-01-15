@@ -6,6 +6,7 @@ package com.java.learn.data.struct.sort.cmp;
  */
 public class BinarySearch {
     public static void main(String[] args) {
+        System.out.println((3+4)>>1);
         System.out.println(search(new int[]{2,4,6,8,10},8));
     }
     public static int indexOf(int[] array,int v){

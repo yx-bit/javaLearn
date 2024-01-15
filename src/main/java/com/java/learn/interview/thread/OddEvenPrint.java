@@ -12,17 +12,18 @@ public class OddEvenPrint  {
     private static AtomicInteger atomicInteger = new AtomicInteger(1);
 
     private static Semaphore odd = new Semaphore(1);
-    private static Semaphore even = new Semaphore(1);
+    private static Semaphore even = new Semaphore(0);
     public static void main(String[] args) {
 
 
         Thread thread1 = new Thread(() -> {
             while (true) {
                 try {
-                    odd.acquire();
-                    if (atomicInteger.get() > 10) {
+                    if (atomicInteger.get() >= 10) {
                         return;
                     }
+                    odd.acquire();
+                    System.out.println("thread1   进入" );
                     if (atomicInteger.get() % 2 != 0) {
                         System.out.println("thread1   " + atomicInteger.getAndAdd(1));
                     }
@@ -36,10 +37,11 @@ public class OddEvenPrint  {
         Thread thread2 = new Thread(() -> {
             while (true) {
                 try {
-                    even.acquire();
                     if (atomicInteger.get() > 10) {
                         return;
                     }
+                    even.acquire();
+                    System.out.println("thread2   进入" );
                     if (atomicInteger.get() % 2 == 0) {
                         System.out.println("thread2   " + atomicInteger.getAndAdd(1));
                     }
@@ -50,8 +52,9 @@ public class OddEvenPrint  {
             }
 
         });
-        thread1.start();
         thread2.start();
+
+        thread1.start();
     }
 
 }
